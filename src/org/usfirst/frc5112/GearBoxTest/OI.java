@@ -46,8 +46,8 @@ public class OI {
 		SmartDashboard.putData("Forwards", new Forwards());
 		SmartDashboard.putData("Backwards", new Backwards());
 		
-		forwards.whenPressed(new Forwards());
-		backwards.whenPressed(new Backwards());
+		forwards.whileHeld(new Forwards());
+		backwards.whileHeld(new Backwards());
 		stop.whenPressed(new Stop());
 		testGears.whenPressed(new ForwardsBakcwardsEtc());
 		invertMotors.whenPressed(new invertMotors());

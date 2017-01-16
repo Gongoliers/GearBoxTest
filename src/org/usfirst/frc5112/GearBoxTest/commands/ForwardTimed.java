@@ -8,6 +8,7 @@ public class ForwardTimed extends Command {
 
 	public ForwardTimed() {
 		requires(Robot.drivetrain);
+		super(10);
 
 	}
 
@@ -19,7 +20,7 @@ public class ForwardTimed extends Command {
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return isTimedOut();
 	}
 
 	protected void end() {

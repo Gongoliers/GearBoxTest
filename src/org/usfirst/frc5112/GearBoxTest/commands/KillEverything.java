@@ -15,7 +15,7 @@ public class KillEverything extends Command{
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	protected void end() {
