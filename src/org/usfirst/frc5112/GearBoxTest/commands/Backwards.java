@@ -27,7 +27,7 @@ public class Backwards extends Command {
 	}
 
 	protected void execute() {
-		Robot.drivetrain.forward(-1);
+		Robot.drivetrain.forward(1);
 	}
 
 	protected boolean isFinished() {
