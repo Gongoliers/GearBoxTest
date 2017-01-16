@@ -8,8 +8,7 @@ public class ForwardTimed extends Command {
 
 	public ForwardTimed() {
 		requires(Robot.drivetrain);
-		super(10);
-
+		setTimeout(10);
 	}
 
 	protected void initialize() {

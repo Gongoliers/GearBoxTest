@@ -8,7 +8,7 @@ public class BackwardsTimed extends Command {
 
 	public BackwardsTimed() {
 		requires(Robot.drivetrain);
-
+		setTimeout(10);
 	}
 
 	protected void initialize() {
@@ -19,7 +19,7 @@ public class BackwardsTimed extends Command {
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return isTimedOut();
 	}
 
 	protected void end() {
