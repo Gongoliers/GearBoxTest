@@ -45,6 +45,8 @@ public class OI {
 		SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
 		SmartDashboard.putData("Forwards", new Forwards());
 		SmartDashboard.putData("Backwards", new Backwards());
+		SmartDashboard.putData("Invert Motors", new invertMotors());
+		SmartDashboard.putData("Default Motor Direction", new defaultMotorDirection());
 		
 		forwards.whileHeld(new Forwards());
 		backwards.whileHeld(new Backwards());
