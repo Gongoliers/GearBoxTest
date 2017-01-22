@@ -7,6 +7,7 @@ import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class CameraSource {
 
@@ -15,14 +16,15 @@ public class CameraSource {
 	}
 
 	private VideoCamera camera;
-	private CvSink sink;
-	private Mat frame;
+	private CvSink sink = new CvSink("CameraSource CvSink");
+	private Mat frame = new Mat();
 	private Thread detectionThread;
 	private Detector<?> detector;
 
 	CameraSource(VideoCamera camera, Detector<?> detector) {
 		this.camera = camera;
 		this.detector = detector;
+		sink.setSource(camera);
 	}
 
 	private Thread createDetectionThread() {
@@ -42,10 +44,7 @@ public class CameraSource {
 	 * target detection processes.
 	 */
 	public void start() {
-//		CameraServer.getInstance().addCamera(camera);
 		CameraServer.getInstance().startAutomaticCapture(camera);
-//		CameraServer.getInstance().startAutomaticCapture();
-		sink = CameraServer.getInstance().getVideo(camera);
 		detectionThread = createDetectionThread();
 		detectionThread.start();
 	}
@@ -56,11 +55,14 @@ public class CameraSource {
 	 * @return The current image from the camera.
 	 */
 	public Mat getPicture() {
-		if (sink != null) {
-			sink.grabFrame(frame);
+		long frameTime = sink.grabFrame(frame);
+		if (frameTime == 0) {
+			String error = sink.getError();
+			DriverStation.reportError(error, true);
+			return null;
+		} else {
 			return frame;
 		}
-		return null;
 	}
 
 	/**
@@ -68,7 +70,6 @@ public class CameraSource {
 	 */
 	public void stop() {
 		detectionThread.interrupt();
-		sink = null;
 		CameraServer.getInstance().removeCamera(camera.getName());
 	}
 
