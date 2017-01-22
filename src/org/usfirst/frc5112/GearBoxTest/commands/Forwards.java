@@ -15,7 +15,7 @@ public class Forwards extends Command {
 	}
 
 	protected void execute() {
-		Robot.drivetrain.forward(1);
+		Robot.drivetrain.forward(.25);
 	}
 
 	protected boolean isFinished() {

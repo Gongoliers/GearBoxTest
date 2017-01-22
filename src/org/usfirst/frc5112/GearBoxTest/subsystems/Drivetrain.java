@@ -46,11 +46,9 @@ public class Drivetrain extends Subsystem {
 	public void operatorControl(Joystick joystick) {
 		if (Robot.oi.joystick.getY() > 0.1) {
 			if (Robot.oi.joystick.getY() >= 0) {
-				robotDrive.arcadeDrive(((joystick.getY() - 0.1) * 10 / 9) * ((joystick.getY() - 0.1) * 10 / 9),
-						joystick.getZ());
+				robotDrive.arcadeDrive(((joystick.getY() - 0.1) * 10 / 9) * ((joystick.getY() - 0.1) * 10 / 9), 0);
 			} else {
-				robotDrive.arcadeDrive(-1 * ((joystick.getY() - 0.1) * 10 / 9) * ((joystick.getY() - 0.1) * 10 / 9),
-						joystick.getZ());
+				robotDrive.arcadeDrive(-1 * ((joystick.getY() - 0.1) * 10 / 9) * ((joystick.getY() - 0.1) * 10 / 9), 0);
 			}
 		} else {
 			robotDrive.arcadeDrive(0, joystick.getZ());
