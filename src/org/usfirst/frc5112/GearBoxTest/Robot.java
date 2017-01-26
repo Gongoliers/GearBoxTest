@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
     private CameraSource camera;
 	private TargetGroupDetector detector;
 	private double angleToTarget, distanceToTarget;
-//	final CvSource outputStream = CameraServer.getInstance().putVideo("Target", 640, 480);
+	final CvSource outputStream = CameraServer.getInstance().putVideo("Target", 640, 480);
 
 
     
@@ -91,8 +91,13 @@ public class Robot extends IterativeRobot {
 							distanceToTarget = bestTarget.computeDistance(640, new HighGoalTarget().getWidth(),
 									CameraSpecs.MicrosoftLifeCam.HORIZONTAL_VIEW_ANGLE);
 						
-				     
-//				            outputStream.putFrame(image);
+				     			Mat image = camera.getPicture();
+							    Rect boundary = new Rect((int) Math.round(bestTarget.getPosition().x),
+								(int) Math.round(bestTarget.getPosition().y),
+								(int) Math.round(bestTarget.getWidth()),
+								(int) Math.round(bestTarget.getHeight()));
+							    Imgproc.rectangle(image, boundary.tl(), boundary.br(), new Scalar(0, 255, 0));
+				            		outputStream.putFrame(image);
 							SmartDashboard.putNumber("Angle", angleToTarget);
 							SmartDashboard.putNumber("Distance", distanceToTarget);
 							System.out.println("Run");
