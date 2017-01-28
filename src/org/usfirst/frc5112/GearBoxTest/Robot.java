@@ -84,24 +84,30 @@ public class Robot extends IterativeRobot {
 				.setTargetGroupSpecs(new Peg())
 				.setTargetSpecs(new PegRetroreflective())
 				.setProcessor((targets) -> {
-					System.out.println("Test");
+	     			Mat image = camera.getPicture();
+	     			
 					if (!targets.isEmpty()) {
 						TargetGroup bestTarget = targets.get(0);
-							angleToTarget = bestTarget.computeAngle(640, CameraSpecs.MicrosoftLifeCam.HORIZONTAL_VIEW_ANGLE);
-							distanceToTarget = bestTarget.computeDistance(640, new HighGoalTarget().getWidth(),
+							angleToTarget = bestTarget.computeAngle(image.width(), CameraSpecs.MicrosoftLifeCam.HORIZONTAL_VIEW_ANGLE);
+							distanceToTarget = bestTarget.computeDistance(image.width(), new Peg().getGroupWidth(),
 									CameraSpecs.MicrosoftLifeCam.HORIZONTAL_VIEW_ANGLE);
 						
-				     			Mat image = camera.getPicture();
 							    Rect boundary = new Rect((int) Math.round(bestTarget.getPosition().x),
 								(int) Math.round(bestTarget.getPosition().y),
 								(int) Math.round(bestTarget.getWidth()),
 								(int) Math.round(bestTarget.getHeight()));
-							    Imgproc.rectangle(image, boundary.tl(), boundary.br(), new Scalar(0, 255, 0));
-				            		outputStream.putFrame(image);
+							    Imgproc.rectangle(image, boundary.tl(), boundary.br(), new Scalar(0, 0, 255));
+				            		
+							    System.out.println(image.width());
+							    SmartDashboard.putNumber("Width", bestTarget.getWidth());
+							    SmartDashboard.putNumber("Height", bestTarget.getHeight());
+							    
 							SmartDashboard.putNumber("Angle", angleToTarget);
 							SmartDashboard.putNumber("Distance", distanceToTarget);
-							System.out.println("Run");
+							SmartDashboard.putString("Confidence", Math.round(bestTarget.getIsTargetGroupProbability() * 100) + "%");
+							
 					}
+					outputStream.putFrame(image);
 				}).build();
 
 		camera = new CameraSource.Builder(detector).setType(CameraSource.Type.USB)
@@ -110,6 +116,7 @@ public class Robot extends IterativeRobot {
 		
 		camera.setBrightness(0);
 		camera.setExposure(0);
+//		camera.setExposureAuto();
 		camera.start();
 
     }

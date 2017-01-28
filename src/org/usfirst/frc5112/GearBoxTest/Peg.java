@@ -20,7 +20,7 @@ public class Peg implements TargetGroupSpecs{
 
 	@Override
 	public double getGroupWidth() {
-		return 10.0 / 12.0;
+		return 10.25 / 12.0;
 	}
 
 	@Override
